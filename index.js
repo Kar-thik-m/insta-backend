@@ -5,7 +5,7 @@ import userRouter from "./route/user.js";
 import IdataRouter from "./route/instadata.js";
 
 const app = express();
-const PORT =process.env.PORT || 4444;
+const PORT =process.env.PORT ||2222;
 
 await dbconnect();
 //app.use(cors());

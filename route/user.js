@@ -3,6 +3,7 @@ import express from 'express';
 import { user } from '../db-utils/model.js';
 import {v4} from 'uuid';
 import bcrypt from 'bcrypt';
+import  Jwt from 'jsonwebtoken';
 
 
 const userRouter=express.Router();
@@ -29,26 +30,30 @@ userRouter.post('/register', async (req, res) => {
     }
 });
 
-userRouter.post('/login',async function(req,res){
-    try{
-        const payload=req.body;
-        const userdata=await user.findOne({name:payload.name})
-        if(userdata){
-           const compare= await bcrypt.compare(payload.password,userdata.password);
-           if (compare) {
-            
-            res.status(200).send({ message: "Login successful" });
+
+userRouter.post('/login', async function (req, res) {
+    try {
+        const payload = req.body;
+        const userdata = await user.findOne({ name: payload.name });
+
+        if (userdata) {
+            const compare = await bcrypt.compare(payload.password, userdata.password);
+
+            if (compare) {
+                // Create a JWT token
+                const token = Jwt.sign({ name: payload.name }, process.env.JWT_SECRET, { expiresIn: '1d' });
+               
+                    
+                res.send({token});
+            } else {
+                res.status(401).send({ message: "Invalid password" });
+            }
         } else {
-           
-            res.status(401).send({ message: "Invalid password" });
+            res.status(404).send({ message: "User is not found" });
         }
-            
-        }else{
-            res.status(404).send({message:"user is not found"});
-        }
-    }catch(error){
+    } catch (error) {
         console.log(error.message);
-        res.status(500).send({message:"error in login  "});
+        res.status(500).send({ message: "Error in login" });
     }
 });
 
