@@ -58,19 +58,6 @@ userRouter.post('/login', async function (req, res) {
 });
 
 
-userRouter.get('/profile/:name', async (req, res) => {
-    try {
-      const { name } = req.params;
-  
-     
-      const products = await user.find({ name: name },{password:0,_id:0});
-  
-      res.json(products);
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({ msg: 'Error' });
-    }
-  });
   
 
 

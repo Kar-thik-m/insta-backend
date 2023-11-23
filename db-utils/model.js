@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type: 'string',
         require: true,
     },
-    name: {
+    profileusername: {
         type: 'string',
         require: true,
     },
@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     type:"string",
     require:true,
    },
+   profileUrl:{
+    type:"string",
+    require:true,
+   }
    
 });
 const itemSchema = new mongoose.Schema({
