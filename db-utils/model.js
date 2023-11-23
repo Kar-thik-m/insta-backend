@@ -34,7 +34,7 @@ const itemSchema = new mongoose.Schema({
         type: 'string',
         require: true,
     },
-    imageurl:{
+    imageUrl:{
         type:'string',
         require:true,
     },
